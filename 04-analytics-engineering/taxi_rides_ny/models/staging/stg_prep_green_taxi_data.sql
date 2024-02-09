@@ -9,6 +9,7 @@ source as (
 renamed as (
 
     select
+        {{ dbt_utils.generate_surrogate_key(['vendorid', 'lpep_pickup_datetime']) }} as tripid,
         vendor_id,
         lpep_pickup_datetime,
         lpep_dropoff_datetime,
@@ -27,6 +28,7 @@ renamed as (
         improvement_surcharge,
         total_amount,
         payment_type,
+        {{ get_payment_type_description('payment_type') }} as payment_type_desc,
         trip_type,
         congestion_surcharge,
         lpep_pickup_date
